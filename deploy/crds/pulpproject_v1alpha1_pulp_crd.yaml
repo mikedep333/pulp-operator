@@ -1,9 +1,9 @@
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: pulps.example.com
+  name: pulps.pulpproject.org
 spec:
-  group: example.com
+  group: pulpproject.org
   names:
     kind: Pulp
     listKind: PulpList

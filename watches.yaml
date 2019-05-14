@@ -1,5 +1,5 @@
 ---
 - version: v1alpha1
-  group: example.com
+  group: pulpproject.org
   kind: Pulp
   playbook: /opt/ansible/playbook.yml

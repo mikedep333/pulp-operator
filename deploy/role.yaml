@@ -41,7 +41,7 @@ rules:
   verbs:
   - update
 - apiGroups:
-  - example.com
+  - pulpproject.org
   resources:
   - '*'
   verbs:
