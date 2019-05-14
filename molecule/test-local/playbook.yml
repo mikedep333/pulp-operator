@@ -60,8 +60,7 @@
         namespace: '{{ namespace }}'
         definition: "{{ custom_resource }}"
 
-    # At 40s, it would time out on Travis CI
-    - name: Wait 120s for reconciliation to run
+    - name: Wait 40s for reconciliation to run
       k8s_facts:
         api_version: '{{ custom_resource.apiVersion }}'
         kind: '{{ custom_resource.kind }}'
@@ -71,7 +70,7 @@
       until:
       - "'Successful' in (cr | json_query('resources[].status.conditions[].reason'))"
       delay: 4
-      retries: 30
+      retries: 10
     rescue:
     - name: debug cr
       ignore_errors: yes
