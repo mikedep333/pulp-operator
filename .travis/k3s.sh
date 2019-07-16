@@ -42,7 +42,7 @@ sudo kubectl get pvc
 sudo kubectl get pv
 df -h
 sudo kubectl -n local-path-storage get pod
-sudo kubectl -n local-path-storage logs --follow=false $STORAGE_POD
+sudo kubectl -n local-path-storage logs $STORAGE_POD
 
 for tries in {0..60}; do
   pods=$(sudo kubectl get pods)
@@ -60,7 +60,7 @@ for tries in {0..60}; do
       sudo kubectl get pv
       df -h
       sudo kubectl -n local-path-storage get pod
-      sudo kubectl -n local-path-storage logs --follow=false $STORAGE_POD
+      sudo kubectl -n local-path-storage logs $STORAGE_POD
       exit 3
     fi
   fi
@@ -72,7 +72,7 @@ sudo kubectl get pvc
 sudo kubectl get pv
 df -h
 sudo kubectl -n local-path-storage get pod
-sudo kubectl -n local-path-storage logs --follow=false $STORAGE_POD
+sudo kubectl -n local-path-storage logs $STORAGE_POD
 
 URL=http://$API_IP:$API_PORT/pulp/api/v3/status/
 echo "URL:"
