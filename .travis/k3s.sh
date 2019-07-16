@@ -18,10 +18,14 @@ do
     API_IP=$( echo "$output" | awk -F '[ :/]+' '/pulp-api/{print $3}')
     echo "PODS:"
     sudo k3s kubectl get pods --all-namespaces
-    set -x
-    http http://$API_IP:$API_PORT/pulp/api/v3/status/
-    set +x
-    exit 0
+    URL=http://$API_IP:$API_PORT/pulp/api/v3/status/
+    echo $URL
+    for tries in {1..30}
+    do
+      if http --timeout 5 --check-status $URL ; then
+        exit 0
+    fi
+    done
   fi
 done
 echo "SERVICES:"
