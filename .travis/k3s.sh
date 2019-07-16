@@ -34,8 +34,14 @@ for tries in {0..30}; do
   sleep 5
 done   
 
+kubectl -n local-path-storage get pod
+STORAGE_POD=$(kubectl -n local-path-storage get pod | awk '/local-path-provisioner/{print $1}')
+
 echo "VOLUMES:"
 sudo k3s kubectl get pvc
+df -h
+kubectl -n local-path-storage get pod
+kubectl -n local-path-storage logs -f $STORAGE_POD
 
 for tries in {0..60}; do
   pods=$(sudo k3s kubectl get pods)
@@ -50,6 +56,9 @@ for tries in {0..60}; do
       echo "$pods"
       echo "VOLUMES:"
       sudo k3s kubectl get pvc
+      df -h
+      kubectl -n local-path-storage get pod
+      kubectl -n local-path-storage logs -f $STORAGE_POD
       exit 3
     fi
   fi
@@ -58,6 +67,9 @@ done
 
 echo "VOLUMES:"
 sudo k3s kubectl get pvc
+df -h
+kubectl -n local-path-storage get pod
+kubectl -n local-path-storage logs -f $STORAGE_POD
 
 URL=http://$API_IP:$API_PORT/pulp/api/v3/status/
 echo "URL:"
