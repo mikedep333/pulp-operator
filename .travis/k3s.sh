@@ -4,12 +4,13 @@
 curl -sfL https://get.k3s.io | sudo sh -
 sudo k3s kubectl get node
 sudo ./k3s-up.sh
+alias kubectl="sudo k3s kubectl"
 
 # Once the services are both up, the pods will be in a Pending state.
 # Before the services are both up, the pods may not exist at all.
 # So check for the services being up 1st.
 for tries in {0..30}; do
-  services=$(sudo k3s kubectl get services)
+  services=$(kubectl get services)
   if [[ $(echo "$services" | grep -c NodePort) -eq 2 ]]; then
     # parse string like this. 30805 is the external port
     # pulp-api     NodePort    10.43.170.79   <none>        24817:30805/TCP   0s
@@ -30,7 +31,7 @@ for tries in {0..30}; do
 done   
 
 for tries in {0..30}; do
-  pods=$(sudo k3s kubectl get pods)
+  pods=$(kubectl get pods)
   if [[ $(echo "$pods" | grep -c Pending) -eq 0 ]]; then
     echo "PODS:"
     echo "$pods"
