@@ -30,6 +30,9 @@ for tries in {0..30}; do
   sleep 5
 done   
 
+echo "VOLUMES:"
+kubectl get pvc
+
 for tries in {0..30}; do
   pods=$(kubectl get pods)
   if [[ $(echo "$pods" | grep -c Pending) -eq 0 ]]; then
@@ -41,11 +44,16 @@ for tries in {0..30}; do
       echo "ERROR 3: Pods never all transitioned to Running state"
       echo "PODS:"
       echo "$pods"
+      echo "VOLUMES:"
+      kubectl get pvc
       exit 3
     fi
   fi
   sleep 5
 done
+
+echo "VOLUMES:"
+kubectl get pvc
 
 URL=http://$API_IP:$API_PORT/pulp/api/v3/status/
 echo "URL:"
