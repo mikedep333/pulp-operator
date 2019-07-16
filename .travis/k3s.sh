@@ -39,6 +39,7 @@ STORAGE_POD=$(sudo k3s kubectl -n local-path-storage get pod | awk '/local-path-
 
 echo "VOLUMES:"
 sudo k3s kubectl get pvc
+sudo k3s kubectl get pv
 df -h
 sudo k3s kubectl -n local-path-storage get pod
 sudo k3s kubectl -n local-path-storage logs -f $STORAGE_POD
@@ -56,6 +57,7 @@ for tries in {0..60}; do
       echo "$pods"
       echo "VOLUMES:"
       sudo k3s kubectl get pvc
+      sudo k3s kubectl get pv
       df -h
       sudo k3s kubectl -n local-path-storage get pod
       sudo k3s kubectl -n local-path-storage logs -f $STORAGE_POD
@@ -67,6 +69,7 @@ done
 
 echo "VOLUMES:"
 sudo k3s kubectl get pvc
+sudo k3s kubectl get pv
 df -h
 sudo k3s kubectl -n local-path-storage get pod
 sudo k3s kubectl -n local-path-storage logs -f $STORAGE_POD
