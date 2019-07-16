@@ -5,7 +5,7 @@ curl -sfL https://get.k3s.io | sudo sh -
 sudo k3s kubectl get node
 sudo ./k3s-up.sh
 
-for tries in {1..30}
+for tries1 in {1..30}
 do
   sleep 5
   pods=$(sudo k3s kubectl get pods)
@@ -28,7 +28,7 @@ do
     URL=http://$API_IP:$API_PORT/pulp/api/v3/status/
     echo $URL
 
-    for tries in {1..30}
+    for tries2 in {1..30}
     do
       if http --timeout 5 --check-status $URL ; then
         exit 0
