@@ -15,7 +15,9 @@ do
     # pulp-api     NodePort    10.43.170.79   <none>        24817:30805/TCP   0s
     API_PORT=$( echo "$output" | awk -F '[ :/]+' '/pulp-api/{print $6}')
     API_IP=$( echo "$output" | awk -F '[ :/]+' '/pulp-api/{print $3}')
+    set -x
     http http://$API_IP:$API_PORT/pulp/api/v3/status/
+    set +x
     exit 0
   fi
 done
