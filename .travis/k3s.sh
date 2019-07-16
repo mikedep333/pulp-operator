@@ -8,7 +8,7 @@ sudo ./k3s-up.sh
 for tries in {1..30}
 do
   sleep 5
-  pods=$(sudo k3s kubectl get pods --all-namespaces)
+  pods=$(sudo k3s kubectl get pods)
   if [[ echo "$pods" | grep Pending ]] ; then
     services=$(sudo k3s kubectl get services)
     echo "SERVICES:"
