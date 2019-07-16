@@ -33,7 +33,7 @@ done
 echo "VOLUMES:"
 kubectl get pvc
 
-for tries in {0..30}; do
+for tries in {0..60}; do
   pods=$(kubectl get pods)
   if [[ $(echo "$pods" | grep -c Pending) -eq 0 ]]; then
     echo "PODS:"
