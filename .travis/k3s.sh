@@ -9,15 +9,15 @@ for tries in {1..30}
 do
   sleep 5
   output=$(sudo k3s kubectl get services)
-  if [[ $(echo $output | grep -c NodePort) -eq 2 ]] ; then
-    echo $output
+  if [[ $(echo "$output" | grep -c NodePort) -eq 2 ]] ; then
+    echo "$output"
     # parse string like this. 30805 is the external port
     # pulp-api     NodePort    10.43.170.79   <none>        24817:30805/TCP   0s
-    API_PORT=$( echo $output | awk -F '[ :/]+' '/pulp-api/{print $6}')
-    API_IP=$( echo $output | awk -F '[ :/]+' '/pulp-api/{print $3}')
+    API_PORT=$( echo "$output" | awk -F '[ :/]+' '/pulp-api/{print $6}')
+    API_IP=$( echo "$output" | awk -F '[ :/]+' '/pulp-api/{print $3}')
     http http://$API_IP:$API_PORT/pulp/api/v3/status/
     exit 0
   fi
 done
-echo $output
+echo "$output"
 exit 1
