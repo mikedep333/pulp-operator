@@ -8,7 +8,7 @@ sudo ./k3s-up.sh
 for tries in {1..30}
 do
   sleep 5
-  if k3s kubectl services | grep NodePort ; then
+  if sudo k3s kubectl services | grep NodePort ; then
     exit 0
   fi
 done
