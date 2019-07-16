@@ -1,7 +1,8 @@
 sudo: required
 services: docker
 language: python
+services:
+  - docker
 install:
   - pip install docker molecule openshift jmespath
-script:
-  - molecule test -s test-local
+script: .travis/k3s.sh
