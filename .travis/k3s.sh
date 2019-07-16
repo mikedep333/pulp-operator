@@ -9,7 +9,7 @@ for tries in {1..30}
 do
   sleep 5
   pods=$(sudo k3s kubectl get pods)
-  if [[ echo "$pods" | grep Pending ]] ; then
+  if[[ $(echo "$pods" | grep -c Pending) -eq 0 ]]; then
     services=$(sudo k3s kubectl get services)
     echo "SERVICES:"
     echo "$services"
