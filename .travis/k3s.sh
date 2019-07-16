@@ -7,6 +7,9 @@ sudo kubectl get node
 # https://github.com/rancher/k3s/issues/85#issuecomment-468293334
 # This is the way to add a simple hostPath storage class.
 sudo kubectl apply -f https://raw.githubusercontent.com/rancher/local-path-provisioner/master/deploy/local-path-storage.yaml
+sudo kubectl get storageclass
+sudo kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+sudo kubectl get storageclass
 
 sudo ./k3s-up.sh
 
