@@ -8,9 +8,16 @@ sudo ./k3s-up.sh
 for tries in {1..30}
 do
   sleep 5
-  if [[ $(sudo k3s kubectl get services | grep -c NodePort) -eq 2 ]] ; then
-    sudo k3s kubectl get services
+  output=$(sudo k3s kubectl get services)
+  if [[ $(echo $output | grep -c NodePort) -eq 2 ]] ; then
+    echo $output
+    # parse string like this. 30805 is the external port
+    # pulp-api     NodePort    10.43.170.79   <none>        24817:30805/TCP   0s
+    API_PORT=$( echo $output | awk -F '[ :/]+' '/pulp-api/{print $6}')
+    API_IP=$( echo $output | awk -F '[ :/]+' '/pulp-api/{print $3}')
+    http :24817/pulp/api/v3/status/
     exit 0
   fi
 done
+echo $output
 exit 1

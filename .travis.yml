@@ -5,5 +5,5 @@ language: python
 services:
   - docker
 install:
-  - pip install docker molecule openshift jmespath
+  - pip install docker molecule openshift jmespath httpie
 script: .travis/k3s.sh
