@@ -35,7 +35,7 @@ for tries in {0..30}; do
 done   
 
 sudo k3s kubectl -n local-path-storage get pod
-STORAGE_POD=$(kubectl -n local-path-storage get pod | awk '/local-path-provisioner/{print $1}')
+STORAGE_POD=$(sudo k3s kubectl -n local-path-storage get pod | awk '/local-path-provisioner/{print $1}')
 
 echo "VOLUMES:"
 sudo k3s kubectl get pvc
