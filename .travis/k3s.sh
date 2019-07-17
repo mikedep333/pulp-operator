@@ -39,7 +39,7 @@ sudo kubectl -n local-path-storage logs $STORAGE_POD
 
 for tries in {0..60}; do
   pods=$(sudo kubectl get pods)
-  if [[ $(echo "$pods" | grep -c Pending) -eq 0 ]]; then
+  if [[ $(echo "$pods" | grep -c -v -E "STATUS|Running") -eq 0 ]]; then
     echo "PODS:"
     echo "$pods"
     break
