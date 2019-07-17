@@ -6,6 +6,8 @@
 # We want to allow devs to use Pulp's ports, like 80, 24816 or 24817,
 # not just the default 30000-32767.
 curl -sfL https://get.k3s.io | sudo INSTALL_K3S_EXEC="--kube-apiserver-arg --service-node-port-range=80-32767" sh -
+echo "SYSTEMD UNIT:"
+sudo cat /etc/systemd/system/k3s.service
 sudo kubectl get node
 # By default, k3s lacks a storage class.
 # https://github.com/rancher/k3s/issues/85#issuecomment-468293334
