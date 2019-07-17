@@ -78,7 +78,10 @@ sudo kubectl -n local-path-storage logs $STORAGE_POD
 URL=http://$API_NODE:$API_PORT/pulp/api/v3/status/
 echo "URL:"
 echo $URL
-for tries in {0..30}; do
+# Sometimes 30 tries is not enough for the service to actually come up
+# Until it does:
+# http: error: Request timed out (5.0s).
+for tries in {0..120}; do
   if http --timeout 5 --check-status $URL ; then
     break
   else
