@@ -37,15 +37,17 @@ df -h
 sudo kubectl -n local-path-storage get pod
 sudo kubectl -n local-path-storage logs $STORAGE_POD
 
-for tries in {0..60}; do
+for tries in {0..120}; do
   pods=$(sudo kubectl get pods)
   if [[ $(echo "$pods" | grep -c -v -E "STATUS|Running") -eq 0 ]]; then
     echo "PODS:"
     echo "$pods"
     break
   else
-    if [[ $tries -eq 30 ]]; then
-      echo "ERROR 3: Pods never all transitioned to Running state"
+    # Often after 30 tries (150 secs), not all of the pods are running yet.
+    # Let's keep Travis from ending the build by outputting.
+    if [[ $(( tries % 30 )) == 0]]; then
+      echo "STATUS: Still waiting on pods to transitiion to running state."
       echo "PODS:"
       echo "$pods"
       echo "VOLUMES:"
@@ -54,6 +56,9 @@ for tries in {0..60}; do
       df -h
       sudo kubectl -n local-path-storage get pod
       sudo kubectl -n local-path-storage logs $STORAGE_POD
+    fi
+    if [[ $tries -eq 120 ]]; then
+      echo "ERROR 3: Pods never all transitioned to Running state"
       exit 3
     fi
   fi
