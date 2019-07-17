@@ -85,7 +85,7 @@ for tries in {0..120}; do
   if http --timeout 5 --check-status $URL ; then
     break
   else
-    if [[ $tries -eq 30 ]]; then
+    if [[ $tries -eq 120 ]]; then
       echo "ERROR 4: Status page never accessible or returning success"
       exit 4
     fi
