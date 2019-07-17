@@ -13,4 +13,14 @@
 ## Usage
 `./up.sh`
 
-`minikube service list` or `kubectl get services`
+`minikube service list`
+
+or
+
+Get external ports:
+
+`kubectl get services`
+
+Get external IP addresses:
+
+`kubectl get pods -o wide`
