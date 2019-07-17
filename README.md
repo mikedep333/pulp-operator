@@ -13,4 +13,4 @@
 ## Usage
 `./up.sh`
 
-`minikube service list`
+`minikube service list` or `kubectl get services`
