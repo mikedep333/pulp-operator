@@ -12,3 +12,5 @@ install:
   - sudo pip install httpie
   - .travis/k3s-install.sh
 script: .travis/k3s.sh
+after_failure:
+  - sudo kubectl logs -l app=pulp-api
