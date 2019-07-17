@@ -13,3 +13,12 @@ sudo kubectl get storageclass
 # How make it the default StorageClass
 sudo kubectl patch storageclass local-path -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 sudo kubectl get storageclass
+
+echo "NAT"
+sudo iptables -L -t nat
+echo "IPTABLES"
+sudo iptables -L
+echo "UFW"
+sudo ufw status verbose
+sudo "CLUSTER-INFO"
+sudo kubectl cluster-info
