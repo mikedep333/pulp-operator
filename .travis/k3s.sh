@@ -12,7 +12,6 @@ for tries in {0..30}; do
     # parse string like this. 30805 is the external port
     # pulp-api     NodePort    10.43.170.79   <none>        24817:30805/TCP   0s
     API_PORT=$( echo "$services" | awk -F '[ :/]+' '/pulp-api/{print $6}')
-    API_IP=$( echo "$services" | awk -F '[ :/]+' '/pulp-api/{print $3}')
     echo "SERVICES:"
     echo "$services"
     break
@@ -38,10 +37,11 @@ sudo kubectl -n local-path-storage get pod
 sudo kubectl -n local-path-storage logs $STORAGE_POD
 
 for tries in {0..120}; do
-  pods=$(sudo kubectl get pods)
+  pods=$(sudo kubectl get pods -o wide)
   if [[ $(echo "$pods" | grep -c -v -E "STATUS|Running") -eq 0 ]]; then
     echo "PODS:"
     echo "$pods"
+    API_NODE=$( echo "$pods" | awk -F '[ :/]+' '/pulp-api/{print $8}')
     break
   else
     # Often after 30 tries (150 secs), not all of the pods are running yet.
@@ -72,7 +72,7 @@ df -h
 sudo kubectl -n local-path-storage get pod
 sudo kubectl -n local-path-storage logs $STORAGE_POD
 
-URL=http://$API_IP:$API_PORT/pulp/api/v3/status/
+URL=http://$API_NODE:$API_PORT/pulp/api/v3/status/
 echo "URL:"
 echo $URL
 for tries in {0..30}; do
