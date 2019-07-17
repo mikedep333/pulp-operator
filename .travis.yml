@@ -6,5 +6,6 @@ services:
   - docker
 install:
   - sudo pip install docker molecule openshift jmespath httpie
+  - test -e /usr/bin/http
   - .travis/k3s-install.sh
 script: .travis/k3s.sh
