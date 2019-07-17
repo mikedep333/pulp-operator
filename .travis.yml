@@ -5,8 +5,10 @@ language: python
 services:
   - docker
 install:
-  # Need /usr/bin/http script, so use sudo
-  - sudo pip install httpie
   - pip install docker molecule openshift jmespath
+  # Need /usr/bin/http script, so use sudo
+  # It can mess up ownership of the python cache dir, so run it after the
+  # non-sudo pip command.
+  - sudo pip install httpie
   - .travis/k3s-install.sh
 script: .travis/k3s.sh
