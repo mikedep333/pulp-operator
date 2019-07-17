@@ -5,6 +5,6 @@ language: python
 services:
   - docker
 install:
-  - sudo pip install docker molecule openshift jmespath httpie
+  - pip install docker molecule openshift jmespath httpie
   - .travis/k3s-install.sh
 script: .travis/k3s.sh
