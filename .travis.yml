@@ -13,4 +13,5 @@ install:
   - .travis/k3s-install.sh
 script: .travis/k3s.sh
 after_failure:
+  - curl http://localhost:24817/pulp/api/v3/status/
   - sudo kubectl logs -l app=pulp-api
