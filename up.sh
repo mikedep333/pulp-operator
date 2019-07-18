@@ -15,7 +15,6 @@ elif [[ "$(hostname)" == "pulp-demo"* ]]; then
 else
   kubectl apply -f deploy/pulp-operator.default.config-map.yml
 fi
-kubectl apply -f deploy/pulp-operator.config-map.yml
 kubectl apply -f deploy/service_account.yaml
 kubectl apply -f deploy/role.yaml
 kubectl apply -f deploy/role_binding.yaml
