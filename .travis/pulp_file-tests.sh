@@ -15,6 +15,6 @@ pushd pulp_file/docs/_scripts
 # TODO: Investigate why launching this script the regular way
 # works in Fedora, but not in Ubuntu.
 # Probably because sh is bash in Fedora, but dash in Ubuntu.
-  bash -x docs_check_sync_publish.sh
+  bash -x -e docs_check_sync_publish.sh
 popd
 
