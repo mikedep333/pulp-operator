@@ -27,5 +27,5 @@ echo "IPTABLES"
 sudo iptables -L
 echo "UFW"
 sudo ufw status verbose
-sudo "CLUSTER-INFO"
+echo "CLUSTER-INFO"
 sudo kubectl cluster-info
