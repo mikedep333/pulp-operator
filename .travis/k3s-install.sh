@@ -6,10 +6,9 @@
 # We want to allow devs to use Pulp's ports, like 80, 24816 or 24817,
 # not just the default 30000-32767.
 #
-# Also, we need to fix access to registry.centos.org
-# TODO: Use this method instead:
+# TODO: Fix access to registry.centos.org
 # https://github.com/rancher/k3s/issues/145#issuecomment-490143506
-curl -sfL https://get.k3s.io | sudo INSTALL_K3S_EXEC="--kube-apiserver-arg service-node-port-range=80-32767 --insecure-registry" sh -
+curl -sfL https://get.k3s.io | sudo INSTALL_K3S_EXEC="--kube-apiserver-arg service-node-port-range=80-32767" sh -
 echo "SYSTEMD UNIT:"
 sudo cat /etc/systemd/system/k3s.service
 sudo kubectl get node
