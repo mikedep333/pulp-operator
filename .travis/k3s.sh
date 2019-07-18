@@ -43,10 +43,7 @@ for tries in {0..120}; do
   if [[ $(echo "$pods" | grep -c -v -E "STATUS|Running") -eq 0 ]]; then
     echo "PODS:"
     echo "$pods"
-    # I think Travis has the firewall up. For k3s, the host is the
-    # 1st/sole node.
-    # API_NODE=$( echo "$pods" | awk -F '[ :/]+' '/pulp-api/{print $8}')
-    API_NODE="localhost"
+    API_NODE=$( echo "$pods" | awk -F '[ :/]+' '/pulp-api/{print $8}')
     break
   else
     # Often after 30 tries (150 secs), not all of the pods are running yet.
@@ -65,6 +62,8 @@ for tries in {0..120}; do
   sleep 5
 done
 
+# Later tests in other scripts will use localhost:24817, which was not a safe
+# assumption at the time this script was originally written.
 URL=http://$API_NODE:$API_PORT/pulp/api/v3/status/
 echo "URL:"
 echo $URL
