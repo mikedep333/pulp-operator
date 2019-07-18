@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 # coding=utf-8
 
-sudo ./k3s-up.sh
+STORAGE_POD=$(sudo kubectl -n local-path-storage get pod | awk '/local-path-provisioner/{print $1}')
+storage_debug() {
+  echo "VOLUMES:"
+  sudo kubectl get pvc
+  sudo kubectl get pv
+  df -h
+  sudo kubectl -n local-path-storage get pod
+  sudo kubectl -n local-path-storage logs $STORAGE_POD
+}
 
 # Once the services are both up, the pods will be in a Pending state.
 # Before the services are both up, the pods may not exist at all.
@@ -20,21 +28,12 @@ for tries in {0..30}; do
       echo "ERROR 2: 1 or more external services never came up"
       echo "SERVICES:"
       echo "$services"
+      storage_debug
       exit 2
     fi
   fi
   sleep 5
 done   
-
-sudo kubectl -n local-path-storage get pod
-STORAGE_POD=$(sudo kubectl -n local-path-storage get pod | awk '/local-path-provisioner/{print $1}')
-
-echo "VOLUMES:"
-sudo kubectl get pvc
-sudo kubectl get pv
-df -h
-sudo kubectl -n local-path-storage get pod
-sudo kubectl -n local-path-storage logs $STORAGE_POD
 
 for tries in {0..120}; do
   pods=$(sudo kubectl get pods -o wide)
@@ -53,27 +52,15 @@ for tries in {0..120}; do
       echo "STATUS: Still waiting on pods to transitiion to running state."
       echo "PODS:"
       echo "$pods"
-      echo "VOLUMES:"
-      sudo kubectl get pvc
-      sudo kubectl get pv
-      df -h
-      sudo kubectl -n local-path-storage get pod
-      sudo kubectl -n local-path-storage logs $STORAGE_POD
     fi
     if [[ $tries -eq 120 ]]; then
       echo "ERROR 3: Pods never all transitioned to Running state"
+      storage_debug
       exit 3
     fi
   fi
   sleep 5
 done
-
-echo "VOLUMES:"
-sudo kubectl get pvc
-sudo kubectl get pv
-df -h
-sudo kubectl -n local-path-storage get pod
-sudo kubectl -n local-path-storage logs $STORAGE_POD
 
 URL=http://$API_NODE:$API_PORT/pulp/api/v3/status/
 echo "URL:"
@@ -95,6 +82,7 @@ for tries in {0..120}; do
     break
   elif [[ $tries -eq 120 ]]; then
     echo "ERROR 4: Status page never accessible or returning success"
+    storage_debug
     exit 4
   fi
 done
