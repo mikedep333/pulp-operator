@@ -7,14 +7,16 @@ kubectl apply -f deploy/crds/pulpproject_v1alpha1_pulp_crd.yaml
 kubectl apply -f deploy/crds/pulpproject_v1alpha1_pulp_cr.yaml
 
 if [[ -e deploy/pulp-operator.config-map.yml ]]; then
-  kubectl apply -f deploy/pulp-operator.config-map.yml
+  CONFIG_MAP=pulp-operator.config-map.yml
 elif [[ "$TRAVIS" == "true" ]]; then
-  kubectl apply -f deploy/pulp-operator.travis.config-map.yml
+  CONFIG_MAP=pulp-operator.travis.config-map.yml
 elif [[ "$(hostname)" == "pulp-demo"* ]]; then
-  kubectl apply -f deploy/pulp-operator.pulp-demo.config-map.yml
+  CONFIG_MAP=pulp-operator.pulp-demo.config-map.yml
 else
-  kubectl apply -f deploy/pulp-operator.default.config-map.yml
+  CONFIG_MAP=pulp-operator.default.config-map.yml
 fi
+echo "Will deploy ConfigMap $CONFIG_MAP"
+kubectl apply -f deploy/$CONFIG_MAP
 kubectl apply -f deploy/service_account.yaml
 kubectl apply -f deploy/role.yaml
 kubectl apply -f deploy/role_binding.yaml
