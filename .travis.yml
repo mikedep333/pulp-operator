@@ -4,6 +4,8 @@ services: docker
 language: python
 services:
   - docker
+before_install:
+  - docs_check_sync_publish.sh
 install:
   - pip install docker molecule openshift jmespath
   # Need /usr/bin/http script, so use sudo
@@ -11,7 +13,9 @@ install:
   # non-sudo pip command.
   - sudo pip install httpie
   - .travis/k3s-install.sh
-script: .travis/k3s.sh
+script:
+  - .travis/k3s.sh
+  - .travis/pulp_file-tests.sh
 after_failure:
   - curl http://localhost:24817/pulp/api/v3/status/
   - sudo kubectl logs -l app=pulp-api
