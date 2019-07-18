@@ -5,7 +5,7 @@
 # where it clones it.
 git clone https://github.com/pulp/pulp_file.git
 
-pushd pulp_file/docs/scripts
+pushd pulp_file/docs/_scripts
 # Let's only do sync tests.
 # So as to check that Pulp can work in containers, including writing to disk.
 # If the upload tests are simpler in the long run, just use them.
