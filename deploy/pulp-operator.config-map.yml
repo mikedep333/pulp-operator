@@ -1,8 +1,0 @@
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: "pulp-operator"
-data:
-  pulp_file_storage_accessMode: "ReadWriteOnce"
-  pulp_file_storage_size: "1Gi"
