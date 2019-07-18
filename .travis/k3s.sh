@@ -81,13 +81,16 @@ echo $URL
 # Sometimes 30 tries is not enough for the service to actually come up
 # Until it does:
 # http: error: Request timed out (5.0s).
-for tries in {0..240}; do
-  if http --timeout 5 --check-status $URL ; then
+for tries in {0..120}; do
+  output=$(http --timeout 5 --check-status $URL)
+  if $? ; then
+    echo "$output"
     break
-  else
-    if [[ $tries -eq 120 ]]; then
-      echo "ERROR 4: Status page never accessible or returning success"
-      exit 4
-    fi
+  # if connection refused, httpie does not wait 5 seconds
+  elif echo "$output" | grep "Errno 111" ; then
+    sleep 5
+  elif [[ $tries -eq 120 ]]; then
+    echo "ERROR 4: Status page never accessible or returning success"
+    exit 4
   fi
 done
