@@ -81,7 +81,7 @@ echo $URL
 # Sometimes 30 tries is not enough for the service to actually come up
 # Until it does:
 # http: error: Request timed out (5.0s).
-for tries in {0..120}; do
+for tries in {0..240}; do
   if http --timeout 5 --check-status $URL ; then
     break
   else
