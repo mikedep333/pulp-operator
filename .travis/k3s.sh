@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # coding=utf-8
 
-STORAGE_POD=$(sudo kubectl -n local-path-storage get pod | awk '/local-path-provisioner/{print $1}')
 storage_debug() {
   echo "VOLUMES:"
   sudo kubectl get pvc
@@ -34,6 +33,10 @@ for tries in {0..30}; do
   fi
   sleep 5
 done   
+
+# This needs to be down here. Otherwise, the storage pod may not be
+# up in time.
+STORAGE_POD=$(sudo kubectl -n local-path-storage get pod | awk '/local-path-provisioner/{print $1}')
 
 for tries in {0..120}; do
   pods=$(sudo kubectl get pods -o wide)
