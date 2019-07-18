@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 # coding=utf-8
 
-# We would do this in .travis.yml before_install:, but then we do not know
-# where it clones it.
-git clone https://github.com/pulp/pulp_file.git
-
 pushd pulp_file/docs/_scripts
 # Let's only do sync tests.
 # So as to check that Pulp can work in containers, including writing to disk.
