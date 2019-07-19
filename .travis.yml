@@ -19,4 +19,4 @@ script:
   - .travis/pulp_file-tests.sh
 after_failure:
   - curl http://localhost:24817/pulp/api/v3/status/
-  - sudo kubectl logs -l app=pulp-api
+  - sudo kubectl logs -l app=pulp-api --tail=-1
