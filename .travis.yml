@@ -11,7 +11,7 @@ install:
   # Need /usr/bin/http script, so use sudo
   # It can mess up ownership of the python cache dir, so run it after the
   # non-sudo pip command.
-  - sudo pip install httpie
+  - sudo pip3 install httpie
   - .travis/k3s-install.sh
 script:
   - sudo ./up.sh
