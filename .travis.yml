@@ -18,5 +18,7 @@ script:
   - .travis/k3s.sh
   - .travis/pulp_file-tests.sh
 after_failure:
-  - curl http://localhost:24817/pulp/api/v3/status/
-  - sudo kubectl logs -l app=pulp-api --tail=-1
+  - http --timeout 30 --check-status --pretty format --print hb http://localhost:24817/pulp/api/v3/status/
+  # With the selector (which eliminates the need to look up the pod name),
+  # we cannot show all logs. 10000 lines should be sufficient.
+  - sudo kubectl logs -l app=pulp-api --tail=10000
