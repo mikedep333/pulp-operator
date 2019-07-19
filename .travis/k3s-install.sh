@@ -23,6 +23,7 @@ if ! [[ $? ]] ; then
   echo "${status}"
   echo "SYSTEMD UNIT:"
   sudo cat /etc/systemd/system/k3s.service
+  exit 1
 fi
 echo "k3s NODE Status:"
 sudo kubectl get node
