@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 # coding=utf-8
 
+# k3s.sh:
+# 1. Check that pulp-operator was successfully deployed on top of k3s
+# 2. Wait for pulp-operator to be deployed to the point that pulp-api is able to
+# serve requests.
+
 storage_debug() {
   echo "VOLUMES:"
   sudo kubectl get pvc
