@@ -5,7 +5,7 @@ language: python
 services:
   - docker
 before_install:
-  - git clone https://github.com/mikedep333/pulp_file.git --branch docs-scripts-fixes
+  - git clone https://github.com/pulp/pulp_file.git
 install:
   - pip install docker molecule openshift jmespath
   # Need /usr/bin/http script, so use sudo
