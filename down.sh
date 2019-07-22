@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# down.sh: Delete pulp-operator from K8s
+
 # Remove the containers/pods before everything they depend on.
 kubectl delete -f deploy/operator.yaml
 
