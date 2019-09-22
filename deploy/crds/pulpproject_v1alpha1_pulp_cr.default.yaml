@@ -18,6 +18,9 @@ metadata:
 #   admin_password:
   # The CONTENT_HOST setting for pulp-api
 # content_host:
+  # Required settings for pulp-ansible.
+# ansible_api_hostname
+# ansible_content_hostname
   # Configuration for the persistentVolumeClaim for /var/lib/pulp
 # pulp_file_storage:
      # If your K8s cluster is only 1 node, and its StorageClass /

@@ -28,3 +28,9 @@ data:
 {% if content_host is defined %}
     CONTENT_HOST = '{{ content_host }}'
 {% endif %}
+{% if ansible_api_hostname is defined %}
+    ANSIBLE_API_HOSTNAME = '{{ ansible_api_hostname }}'
+{% endif %}
+{% if ansible_content_hostname is defined %}
+    ANSIBLE_CONTENT_HOSTNAME = '{{ ansible_content_hostname }}'
+{% endif %}
